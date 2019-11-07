@@ -4,7 +4,6 @@ MAINTAINER Toshihiro KONDA
 
 RUN yum -y update && \
     yum -y install gcc gcc-c++ wget && \
-    cd /tmp/ && \
     wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz && \
     tar xf gcc-9.2.0.tar.gz && \
     rm gcc-9.2.0.tar.gz && \
