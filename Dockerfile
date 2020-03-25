@@ -1,6 +1,6 @@
 FROM centos:centos6
 
-MAINTAINER Toshihiro KONDA
+LABEL maintainer "Toshihiro KONDA <kontoshi0317@gmail.com>"
 
 ARG USER
 ARG PASSWD
@@ -22,8 +22,8 @@ RUN cd /home/${USER} && \
     ./contrib/download_prerequisites && \
     mkdir build && cd build && \
     ../configure --enable-languages=c,c++ --prefix=/usr/local/ --enable-bootstrap --disable-multilib && \
-    make -j8 && \
-    make -j8 install
+    make -j`nproc` && \
+    make -j`nproc` install
 
 RUN cp /usr/local/lib64/libstdc++.so.6.0.27 /usr/lib64 && \
     cd /usr/lib64 && \
@@ -38,8 +38,8 @@ RUN cd /home/${USER} && \
     mkdir build && \
     cd build && \
     ../configure --prefix=/usr/local/ && \
-    make -j8 && \
-    make -j8 install
+    make -j`nproc` && \
+    make -j`nproc` install
 
 RUN cd /home/${USER} && \
     wget https://www.python.org/ftp/python/2.7.6/Python-2.7.6.tgz && \
@@ -49,8 +49,8 @@ RUN cd /home/${USER} && \
     mkdir build && \
     cd build && \
     ../configure --prefix=/usr/local/ && \
-    make -j8 && \
-    make -j8 install
+    make -j`nproc` && \
+    make -j`nproc` install
 
 RUN cd /home/${USER} && \
     wget https://github.com/llvm/llvm-project/archive/llvmorg-9.0.1.tar.gz && \
@@ -60,8 +60,8 @@ RUN cd /home/${USER} && \
     mkdir build && \
     cd build && \
     cmake .. -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr/local/ -DCMAKE_C_COMPILER=/usr/local/bin/gcc -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ && \
-    make -j8 && \
-    make -j8 install
+    make -j`nproc` && \
+    make -j`nproc` install
 
 USER ${USER}
 WORKDIR /home/${USER}
